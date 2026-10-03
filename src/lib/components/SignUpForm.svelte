@@ -3,8 +3,10 @@
    * The landing page's sign-up form, sitting straight on the green. Just for signing up: most people here are
    * new, so logging in is a quiet link under the button, to the log-in page.
    *
-   * Lives only on readthicket.com's landing page. The handle field shows the
-   * address being built ("readthicket.com/@" in front of what you type), which says what a handle is without help text.
+   * The landing page's copy of the form thicket's own sign-up page uses
+   * (thicket's lib/components/SignUpForm.svelte, drawn on the green). The line
+   * above the handle field builds your page's address as you type
+   * ("readthicket.com/@you" until then), which says what a handle is.
    * Hints sit inside the empty fields. The button is full strength from the
    * start; anything missing or wrong is explained under its field after you
    * press it, rather than leaving a pale button that looks broken.
@@ -58,11 +60,9 @@
 
 <div class="box">
   <form novalidate onsubmit={(e) => { e.preventDefault(); void submit(); }}>
-    <Field label="Your handle" error={error?.field === 'handle' ? error.message : null}>
+    <Field label="Your handle" hint="Your page will be readthicket.com/@{handleClean || 'you'}" error={error?.field === 'handle' ? error.message : null}>
       {#snippet children({ id, describedBy, invalid })}
-        <Input {id} aria-describedby={describedBy} {invalid} inset bind:value={handle} autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="you" style="--field-gap: 0">
-          {#snippet leading()}<span class="prefix" aria-hidden="true">readthicket.com/@</span>{/snippet}
-        </Input>
+        <Input {id} aria-describedby={describedBy} {invalid} inset bind:value={handle} autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="Pick a short name" />
       {/snippet}
     </Field>
     <Field label="Password" error={error?.field === 'password' ? error.message : null}>
@@ -94,11 +94,10 @@
   .box :global(label) { color: var(--on-green); }
   /* The dark theme's danger red, a shade paler: the light theme's is too dim on
      the green, and the dark one's fell just short of 4.5:1 on the green's lighter patches. */
+  .box :global(.note) { color: var(--on-green-2); }
   .box :global(.note.bad) { color: var(--on-green-danger); }
   form { display: flex; flex-direction: column; gap: var(--space-4); }
   .go { display: flex; flex-direction: column; --accent: var(--d-accent); --accent-ink: var(--d-accent-ink); }
-  /* The address being built sits in front of what's typed, in quiet ink. */
-  .prefix { color: var(--text-2); white-space: nowrap; }
   .bad { color: var(--on-green-danger); margin: 0; font-size: calc(var(--text-sm) * var(--size-app)); }
   .after { margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-1); font-size: calc(var(--text-sm) * var(--size-app)); color: var(--on-green-2); }
   .after p { margin: 0; }

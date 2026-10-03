@@ -59,3 +59,10 @@ export const collectionHref = (handle: string, slug: string) => `/@${handle}/col
 
 /** The handle rules, word for word what the server says when it turns a handle down. */
 export const HANDLE_RULES = 'A handle needs 2 to 30 characters and must start with a letter or number. You can use lowercase letters, numbers, hyphens, and/or underscores.';
+
+/**
+ * Where to send someone to copy a collection: its page with `?copy`, which
+ * copies it on arrival. Matches copyNext in thicket's lib/copyintent.svelte.ts.
+ */
+export const copyNext = (handle: string, slug: string, from: string) =>
+  `/@${encodeURIComponent(handle)}/collections/${encodeURIComponent(slug)}?copy=${encodeURIComponent(from)}`;

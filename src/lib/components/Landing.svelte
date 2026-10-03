@@ -79,7 +79,7 @@
     </ul>
 </section>
 
-<div class="peek"><StarterPacks heading="Peek inside" lede="Open a collection and start reading now. No account needed." /></div>
+<div class="peek"><StarterPacks heading="Peek inside" lede="Open a collection and start reading now. No account needed." {signedIn} /></div>
 
 {#if !signedIn}
   <section id="sign-up" class="join" aria-labelledby="sign-up-heading">
