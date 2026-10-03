@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="color-scheme" content="light dark" />
+		<meta name="theme-color" content="#f6f1e8" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)" />
+		<link rel="manifest" href="/manifest.webmanifest" />
+		<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<!-- How this device shows thicket (light/dark, colour theme, fonts, layout)
+		     is chosen per device and kept in this browser (see lib/display.svelte.ts).
+		     Read it here, before anything paints, so a dark reader is never flashed
+		     a white page on the way in. Older installs kept two separate keys; the
+		     store migrates those on load, this only has to honour them meanwhile. -->
+		<script>
+			try {
+				var r = document.documentElement, ds = r.dataset;
+				var raw = localStorage.getItem('thicket:display');
+				if (raw) {
+					var d = JSON.parse(raw) || {}, f = d.fonts || {};
+					if (d.appearance === 'light' || d.appearance === 'dark') ds.theme = d.appearance;
+					// Retired themes; the store moves them the same way. Keep in step with RETIRED_PALETTES.
+					if (d.palette === 'kingfisher' || d.palette === 'graphite' || d.palette === 'fog') d.palette = 'slate';
+					if (d.palette && d.palette !== 'default') ds.palette = d.palette;
+					if (d.palette === 'contrast' && d.accent) ds.accent = d.accent;
+					if (d.layout === 'paged') ds.layout = 'paged';
+					if (d.reading === 'inline') ds.reading = 'inline';
+					var defaults = { headings: 'serif', reading: 'sans', app: 'sans' };
+					for (var role in defaults) {
+						var x = f[role] || {};
+						if (x.family && x.family !== defaults[role]) ds['font' + role[0].toUpperCase() + role.slice(1)] = x.family;
+						if (typeof x.size === 'number') r.style.setProperty('--size-' + role, String(1 + x.size * 0.125));
+					}
+				} else {
+					var t = localStorage.getItem('thicket:theme');
+					if (t === 'light' || t === 'dark') ds.theme = t;
+					var lf = localStorage.getItem('thicket:font');
+					if (lf === 'serif') ds.fontReading = 'serif';
+					if (lf === 'dyslexic') { ds.fontHeadings = 'dyslexic'; ds.fontReading = 'dyslexic'; ds.fontApp = 'dyslexic'; }
+				}
+			} catch (e) {}
+			// The sidebar width the reader dragged to (see lib/navwidth.svelte.ts).
+			try {
+				var w = Number(localStorage.getItem('thicket:nav-width'));
+				if (w >= 200 && w <= 360) document.documentElement.style.setProperty('--nav-w', w + 'px');
+			} catch (e) {}
+		</script>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
