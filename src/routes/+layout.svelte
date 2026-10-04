@@ -10,12 +10,12 @@
   import '../app.css';
   import Button from '$lib/components/Button.svelte';
   import Wordmark from '$lib/components/Wordmark.svelte';
+  import { page } from '$app/state';
   import type { LayoutProps } from './$types';
 
   let { data, children }: LayoutProps = $props();
 </script>
 
-<svelte:head><title>thicket</title></svelte:head>
 
 <span class="skip"><Button variant="primary" href="#content">Skip to content</Button></span>
 
@@ -24,8 +24,8 @@
   {#if data.me}
     <span class="auth"><Button link size="lg" href="/everything" data-sveltekit-reload>You’re already logged in <span aria-hidden="true">→</span></Button></span>
   {:else}
-    <!-- Sign up jumps to the form at the end of the page. -->
-    <span class="auth"><Button href="/login" data-sveltekit-reload>Log in</Button><Button variant="primary" href="#sign-up">Sign up</Button></span>
+    <!-- Sign up jumps to the form at the end of the landing page. -->
+    <span class="auth"><Button href="/login" data-sveltekit-reload>Log in</Button><Button variant="primary" href={page.url.pathname === '/' ? '#sign-up' : '/#sign-up'}>Sign up</Button></span>
   {/if}
 </header>
 
