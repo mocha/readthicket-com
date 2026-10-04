@@ -66,3 +66,13 @@ export const HANDLE_RULES = 'A handle needs 2 to 30 characters and must start wi
  */
 export const copyNext = (handle: string, slug: string, from: string) =>
   `/@${encodeURIComponent(handle)}/collections/${encodeURIComponent(slug)}?copy=${encodeURIComponent(from)}`;
+
+export const contactApi = {
+  /**
+   * Send a message from the Contact page. It goes to this site's own server
+   * (src/routes/contact/send/+server.ts), not the app. `website` is the hidden box
+   * only scripts fill in.
+   */
+  send: (name: string, email: string, message: string, website: string) =>
+    j<{ ok: true }>('/contact/send', { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify({ name, email, message, website }) })
+};

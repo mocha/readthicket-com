@@ -16,6 +16,7 @@
   import StarterPacks from './StarterPacks.svelte';
   import Card from './Card.svelte';
   import HeroForest from './HeroForest.svelte';
+  import MarketingFooter from './MarketingFooter.svelte';
 
   /** Someone signed in doesn't get the sign-up form; the header offers them the way back in instead. */
   let { signedIn = false }: { signedIn?: boolean } = $props();
@@ -87,9 +88,7 @@
     <div class="auth"><SignUpForm /></div>
   </section>
 {/if}
-<footer>
-  <p>thicket is free, open-source software under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL</a>.<br /><a href="https://github.com/mocha/thicket" rel="noopener">Read the source</a> or run your own thicket site.</p>
-</footer>
+<MarketingFooter />
 {/snippet}
 
 <div class="top"><HeroForest {pitch} {below} /></div>
@@ -149,11 +148,6 @@
   .features svg { flex: none; color: var(--accent); }
   .features h3 { margin: 0; color: var(--accent); font-size: calc(var(--text-base) * var(--size-app)); font-weight: 700; }
   .features p { margin: 0; color: var(--text-2); font-size: calc(var(--text-base) * var(--size-app)); line-height: 1.45; }
-  /* The last thing on the green, in quiet cream under a faint cream rule. */
-  footer { position: relative; margin: calc(var(--space-6) * 3) 0 0; padding-top: var(--space-5); border-top: 1px solid color-mix(in srgb, #f6f1e8 18%, transparent); color: color-mix(in srgb, #f6f1e8 65%, transparent); font-size: calc(var(--text-sm) * var(--size-app)); }
-  /* One sentence to a line. */
-  footer p { margin: 0; text-wrap: pretty; }
-  footer a { color: #f6f1e8; font-weight: 600; }
   @media (min-width: 820px) {
     /* The differences in two columns. */
     .apart ul { grid-template-columns: repeat(2, 1fr); gap: var(--space-5) calc(var(--space-6) + var(--space-1)); }

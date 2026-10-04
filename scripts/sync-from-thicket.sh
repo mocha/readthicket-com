@@ -29,6 +29,7 @@ files=(
   lib/components/Input.svelte
   lib/components/Monogram.svelte
   lib/components/SourceIcon.svelte
+  lib/components/Textarea.svelte
   lib/components/Wordmark.svelte
 )
 

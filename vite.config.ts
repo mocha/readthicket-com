@@ -14,6 +14,6 @@ const app = { target: thicket, changeOrigin: true };
 export default defineConfig({
   plugins: [sveltekit()],
   server: {
-    proxy: { '/api': app, '/fonts': app, '/icon.svg': app, '/icon-large.svg': app, '/apple-touch-icon.png': app, '/manifest.webmanifest': app }
+    proxy: { '/api': app, '/fonts': app, '/icon.svg': app, '/icon-large.svg': app, '/favicon.ico': app, '/favicon-96x96.png': app, '/apple-touch-icon.png': app, '/manifest.webmanifest': app }
   }
 });
